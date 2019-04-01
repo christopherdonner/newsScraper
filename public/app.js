@@ -1,3 +1,12 @@
+// Grab the articles as a json
+$.getJSON("/articles", function(data) {
+    // For each one
+    for (var i = 0; i < data.length; i++) {
+      // Display the apropos information on the page
+      $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+    }
+  });
+
 $(document).on("click", "p", function() {
     // Empty the notes from the note section
     $("#notes").empty();
@@ -55,6 +64,14 @@ $(document).on("click", "p", function() {
         $("#notes").empty();
       });
   
+ $(".scrape-new").on("click", function(){
+    console.log("/scrape") 
+    $.get({
+        method: "GET", 
+        url: "/scrape"
+     })
+ })     
+
     // Also, remove the values entered in the input and textarea for note entry
     $("#titleinput").val("");
     $("#bodyinput").val("");
