@@ -96,4 +96,8 @@ app.get("/scrape", function(req, res) {
         res.json(err);
       });
   });
+
+  app.delete("/articles/", function(req, res) {
+      db.Article.deleteMany();
+  })
 }
