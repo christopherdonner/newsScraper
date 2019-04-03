@@ -71,12 +71,13 @@ module.exports = function (app) {
       });
   });
 
-  app.delete("/articles/", function (req, res) {
+  app.post("/articles/", function (req, res) {
     console.log("clear")
     db.Article.deleteMany();
   })
-}
 
-app.post("/saved/")
-console.log("article saved")
-db.Article.findOneAndUpdate({ _id: req.params.id })
+  app.post("/saved/", function (req, res){
+    console.log("article saved")
+    db.Article.findOneAndUpdate({ _id: req.params.id })
+  })
+}

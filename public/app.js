@@ -59,8 +59,8 @@ $(".scrape-new").on("click", function () {
 $(".clear").on("click", function () {
   console.log("delete")
   $.ajax({
-    method: "DELETE",
+    method: "post",
     url: "/articles",
-    headers: { 'X-Alt-Referer': referrer }
+    // headers: { 'X-Alt-Referer': referrer }
   })
 })
