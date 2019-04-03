@@ -54,13 +54,22 @@ $(".scrape-new").on("click", function () {
     method: "GET",
     url: "/scrape"
   })
+  .then(function (){
+    location.reload();
+  })
 })
 
 $(".clear").on("click", function () {
   console.log("delete")
   $.ajax({
-    method: "post",
+    method: "POST",
     url: "/articles",
-    // headers: { 'X-Alt-Referer': referrer }
+  })
+})
+
+$(".saveArticle").on("click", function (){
+  $.ajax({
+    method: "POST",
+    url: "/articles/
   })
 })

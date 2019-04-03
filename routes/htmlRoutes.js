@@ -33,6 +33,7 @@ module.exports = function (app) {
           });
       });
 
+      location.reload();
       res.send("Scrape Complete");
     });
   });
@@ -73,7 +74,7 @@ module.exports = function (app) {
 
   app.post("/articles/", function (req, res) {
     console.log("clear")
-    db.Article.deleteMany();
+    db.Article.deleteMany({ });
   })
 
   app.post("/saved/", function (req, res){
