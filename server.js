@@ -9,12 +9,10 @@ var db = require("./models");
 var app = express();
 var PORT = process.env.PORT || 3101;
 
-// Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
 
-// Handlebars
 app.engine(
   "handlebars",
   exphbs({
@@ -23,11 +21,8 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
-// Routes
-// require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
 
-// // Connect to the Mongo DB
 mongoose.connect("mongodb://localhost/newsScraper", { useNewUrlParser: true });
 
 app.listen(PORT, function() {
