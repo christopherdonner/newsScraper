@@ -33,7 +33,7 @@ module.exports = function (app) {
           });
       });
 
-      location.reload();
+      
       res.send("Scrape Complete");
     });
   });
@@ -74,11 +74,19 @@ module.exports = function (app) {
 
   app.post("/articles/", function (req, res) {
     console.log("clear")
-    db.Article.deleteMany({ });
+    db.Article.deleteMany({ }).then(function (results){
+      console.log(results)
+    });
   })
 
-  app.post("/saved/", function (req, res){
+  app.put("/saved/", function (req, res){
     console.log("article saved")
-    db.Article.findOneAndUpdate({ _id: req.params.id })
+    db.Article.findOneAndUpdate({ _id: req.params.id }, {saved: true})
   })
+  
+  app.get("/saved/", function(req, res){
+    console.log("/saved/");
+    db.Article.find({saved: true}).then(function (dbArticle){res.json(dbArticle) })
+  })
+  
 }

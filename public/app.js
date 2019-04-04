@@ -55,6 +55,7 @@ $(".scrape-new").on("click", function () {
     url: "/scrape"
   })
   .then(function (){
+    console.log("scrape complete")
     location.reload();
   })
 })
@@ -65,11 +66,19 @@ $(".clear").on("click", function () {
     method: "POST",
     url: "/articles",
   })
+  .then(function (){
+    console.log("articles cleared")
+    location.reload();
+  })
 })
 
 $(".saveArticle").on("click", function (){
+  console.log("saveArticle")
+  var thisId = $(this).attr("data-id");
   $.ajax({
-    method: "POST",
-    url: "/articles/
+    method: "PUT",
+    url: "/articles/" + thisId
+  }).then(function(){
+    return 
   })
 })
