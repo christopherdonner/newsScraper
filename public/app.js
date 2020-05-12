@@ -1,12 +1,22 @@
+var dataID=0
+
 $.getJSON("/articles", function (data) {
+  console.log(data)
   for (var i = 0; i < data.length; i++) {
+    dataID=data[i]._id
     $("#articles").append(`<p data-id=${data[i]._id}>${data[i].title}<br /><a href="https://www.nytimes.com${data[i].link}"> https://www.nytimes.com${data[i].link} </a></p>`);
-    $("#articles").append(`<button class="btn btn-primary saveArticle">Save</button>`)
+    $("#articles").append(`<button class="btn btn-primary saveArticle" data-id=${data[i]._id}>Save</button>`)
+    $(".saveArticle").on("click", function(){
+      saveArticle(dataID)
+      // event.stopPropagation();
+      event.preventDefault();
+    })
   }
 });
 
 $(document).on("click", "p", function () {
   $("#notes").empty();
+  console.log($(this).attr("data-id"))
   var thisId = $(this).attr("data-id");
 
   $.ajax({
@@ -19,7 +29,12 @@ $(document).on("click", "p", function () {
       $("#notes").append("<input id='titleinput' name='title' >");
       $("#notes").append("<br><br>")
       $("#notes").append("<textarea id='bodyinput' name='body'></textarea><br>");
-      $("#notes").append(`<button class="btn btn-primary" data-id=${data._id} id='savenote'>Save Note</button>`);
+      $("#notes").append(`<button class="btn btn-primary" data-id="${data._id}" id='savenote'>Save Note</button>`);
+      $(".saveArticle").on("click", function(){
+        saveArticle(dataID)
+        event.stopPropagation();
+        event.preventDefault();
+      })
 
       if (data.note) {
         $("#titleinput").val(data.note.title);
@@ -72,13 +87,21 @@ $(".clear").on("click", function () {
   })
 })
 
-$(".saveArticle").on("click", function (){
+// $(".saveArticle").on("click", function(){
+//   console.log(saveArticle)
+//   saveArticle(dataID)
+//   // event.stopPropagation();
+//   // event.preventDefault();
+// })
+
+function saveArticle(dataID){
   console.log("saveArticle")
-  var thisId = $(this).attr("data-id");
+  console.log(dataID)
   $.ajax({
     method: "PUT",
-    url: "/articles/" + thisId
+    url: "/articles/" + dataID
   }).then(function(){
+    console.log(`saved ${dataID}`)
     return 
   })
-})
+}

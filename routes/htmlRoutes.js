@@ -15,14 +15,17 @@ module.exports = function (app) {
 
       $("article h2").each(function (i, element) {
         var result = {};
-
+        // console.log($(this))
         result.title = $(element).text();
-        //   result.title = $(this)
+        //   result.title = $(this)   
         //     .children("span")
         //     .text();
         result.link = $(this)
           .children("a")
           .attr("href");
+        
+          result.image=$(this).children("img")
+          console.log(result.image)
 
         db.Article.create(result)
           .then(function (dbArticle) {
@@ -79,8 +82,8 @@ module.exports = function (app) {
     });
   })
 
-  app.put("/saved/", function (req, res){
-    console.log("article saved")
+  app.put("/articles/:id", function (req, res){
+    console.log(req.params)
     db.Article.findOneAndUpdate({ _id: req.params.id }, {saved: true})
   })
   
