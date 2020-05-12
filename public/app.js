@@ -1,6 +1,7 @@
 var dataID=0
 
 $.getJSON("/articles", function (data) {
+  console.log(data)
   for (var i = 0; i < data.length; i++) {
     dataID=data[i]._id
     $("#articles").append(`<p data-id=${data[i]._id}>${data[i].title}<br /><a href="https://www.nytimes.com${data[i].link}"> https://www.nytimes.com${data[i].link} </a></p>`);
