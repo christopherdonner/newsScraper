@@ -25,6 +25,7 @@ $(document).on("click", "p", function () {
   })
     .then(function (data) {
       console.log(data);
+      $(".modal").css("display", "block")
       $("#notes").append(`<h2>${data.title}</h2>`);
       $("#notes").append("<input id='titleinput' name='title' >");
       $("#notes").append("<br><br>")

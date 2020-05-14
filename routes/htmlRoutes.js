@@ -24,8 +24,8 @@ module.exports = function (app) {
           .children("a")
           .attr("href");
         
-          result.image=$(this).children("img")
-          console.log(result.image)
+          // result.image=$(this).children("img")
+          // console.log(result.image)
 
         db.Article.create(result)
           .then(function (dbArticle) {
