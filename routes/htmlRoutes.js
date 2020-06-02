@@ -9,23 +9,19 @@ module.exports = function (app) {
     res.render("index");
   });
 
-  app.get("/scrape", function (req, res) {
+    app.get("/scrape", function (req, res) {
     axios.get("https://www.nytimes.com/section/world").then(function (response) {
       var $ = cheerio.load(response.data);
 
       $("article h2").each(function (i, element) {
         var result = {};
-        // console.log($(this))
         result.title = $(element).text();
-        //   result.title = $(this)   
-        //     .children("span")
-        //     .text();
-        result.link = $(this)
-          .children("a")
-          .attr("href");
-        
-          // result.image=$(this).children("img")
-          // console.log(result.image)
+        result.link = $(this).children("a").attr("href");
+        // console.log(result.link)
+
+        result.image = $(this).parent().siblings('figure').children('a').children('img').attr('src')
+        // console.log("IMAGE!")
+        console.log($(this).parent().siblings('figure').children('a').children('img').attr('src'))
 
         db.Article.create(result)
           .then(function (dbArticle) {
@@ -36,7 +32,7 @@ module.exports = function (app) {
           });
       });
 
-      
+
       res.send("Scrape Complete");
     });
   });
@@ -77,19 +73,19 @@ module.exports = function (app) {
 
   app.post("/articles/", function (req, res) {
     console.log("clear")
-    db.Article.deleteMany({ }).then(function (results){
+    db.Article.deleteMany({}).then(function (results) {
       console.log(results)
     });
   })
 
-  app.put("/articles/:id", function (req, res){
+  app.put("/articles/:id", function (req, res) {
     console.log(req.params)
-    db.Article.findOneAndUpdate({ _id: req.params.id }, {saved: true})
+    db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: true })
   })
-  
-  app.get("/saved/", function(req, res){
+
+  app.get("/saved/", function (req, res) {
     console.log("/saved/");
-    db.Article.find({saved: true}).then(function (dbArticle){res.json(dbArticle) })
+    db.Article.find({ saved: true }).then(function (dbArticle) { res.json(dbArticle) })
   })
-  
+
 }
