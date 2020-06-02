@@ -4,7 +4,7 @@ $.getJSON("/articles", function (data) {
   console.log(data)
   for (var i = 0; i < data.length; i++) {
     dataID=data[i]._id
-    $("#articles").append(`<p data-id=${data[i]._id}>${data[i].title}<br /><a href="https://www.nytimes.com${data[i].link}"> https://www.nytimes.com${data[i].link} </a></p>`);
+    $("#articles").append(`<p data-id=${data[i]._id}>${data[i].title}><br><img src="${data[i].image}" width=320, heigh=240><br /><a href="https://www.nytimes.com${data[i].link}"></a></p>`);
     $("#articles").append(`<button class="btn btn-primary saveArticle" data-id=${data[i]._id}>Save</button>`)
     $(".saveArticle").on("click", function(){
       saveArticle(dataID)
@@ -13,6 +13,8 @@ $.getJSON("/articles", function (data) {
     })
   }
 });
+
+
 
 $(document).on("click", "p", function () {
   $("#notes").empty();
