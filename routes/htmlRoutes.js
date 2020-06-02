@@ -9,7 +9,7 @@ module.exports = function (app) {
     res.render("index");
   });
 
-  app.get("/scrape", function (req, res) {
+    app.get("/scrape", function (req, res) {
     axios.get("https://www.nytimes.com/section/world").then(function (response) {
       var $ = cheerio.load(response.data);
 
@@ -25,7 +25,7 @@ module.exports = function (app) {
 
         db.Article.create(result)
           .then(function (dbArticle) {
-            // console.log(dbArticle);
+            console.log(dbArticle);
           })
           .catch(function (err) {
             console.log(err);
