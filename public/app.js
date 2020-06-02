@@ -16,8 +16,11 @@ $.getJSON("/articles", function (data) {
 
 
 
-$(document).on("click", "p", function () {
+$(document).on("click", "p", function (e) {
   $("#notes").empty();
+  console.log(e)
+ let X = e.clientX
+ let Y = e.clientY
   console.log($(this).attr("data-id"))
   var thisId = $(this).attr("data-id");
 
@@ -27,7 +30,9 @@ $(document).on("click", "p", function () {
   })
     .then(function (data) {
       console.log(data);
-      $(".modal").css("display", "block")
+      $(".modal").css("display", "inline")
+      $(".modal").css("top", Y)
+      $(".modal").css("left", X)
       $("#notes").append(`<h2>${data.title}</h2>`);
       $("#notes").append("<input id='titleinput' name='title' >");
       $("#notes").append("<br><br>")
