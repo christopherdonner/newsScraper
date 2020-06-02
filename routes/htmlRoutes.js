@@ -13,18 +13,19 @@ module.exports = function (app) {
     axios.get("https://www.nytimes.com/section/world").then(function (response) {
       var $ = cheerio.load(response.data);
 
-      $("article h2").each(function (i, element) {
+      $("li article").each(function (i, element) {
         var result = {};
-        // console.log($(this))
+        console.log(this)
+        // console.log(element)
         result.title = $(element).text();
+        console.log(result.title)
         //   result.title = $(this)   
         //     .children("span")
         //     .text();
-        result.link = $(this)
-          .children("a")
-          .attr("href");
+        result.link = $(element).children("a").attr("href");
         
-          result.image=$(this).children("img")
+          result.image=$(this).children("figure")
+          console.log("IMAGE!")
           console.log(result.image)
 
         db.Article.create(result)
