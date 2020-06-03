@@ -1,5 +1,13 @@
 var dataID=0
 
+function drawArticles(){
+
+};
+
+function drawModal(){
+  
+}
+
 $.getJSON("/articles", function (data) {
   console.log(data)
   for (var i = 0; i < data.length; i++) {
@@ -33,15 +41,19 @@ $(document).on("click", "p", function (e) {
       console.log(data);
       $(".modal").css("display", "inline")
       $(".modal").css("top", Y).css("left", X)
-      $("#notesTitle").html(`<h2>${data.title}</h2>`);
+      // $(".modal").html(`<div class='col-1 offset-11' id='close'>X</div>`)
+      $("#notesTitle").html(`<row><div class='col-1 offset-11' id='close'>X</div></row><row><h3>${data.title}</h3></row>`);
       $("#notesBody").html("<input id='titleinput' name='title' >");
       $("#notesBody").append("<br><br>")
       $("#notesBody").append("<textarea id='bodyinput' name='body'></textarea><br>");
       $("#notesBody").append(`<button class="btn btn-primary" data-id="${data._id}" id='savenote'>Save Note</button>`);
-      $(".saveArticle").on("click", function(){
+      $("#notesBody").append(`<a href="https://www.nytimes.com${data.link}"><button class="btn btn-primary" data-id="${data._id}" id='savenote'>Open</button>`);
+      
+      $(".saveArticle").on("click", function(e){
         saveArticle(dataID)
-        event.stopPropagation();
-        event.preventDefault();
+        
+        event.stopPropagation(e);
+        event.preventDefault(e);
       })
 
       if (data.note) {
@@ -64,7 +76,8 @@ $(document).on("click", "#savenote", function () {
   })
     .then(function (data) {
       console.log(data);
-      $("#notes").empty();
+      // $("#notes").empty();
+      $(".modal").css("display", "none")
     });
 
   $("#titleinput").val("");
