@@ -4,8 +4,7 @@ $.getJSON("/articles", function (data) {
   console.log(data)
   for (var i = 0; i < data.length; i++) {
     dataID=data[i]._id
-    $("#articles").append(`<p data-id=${data[i]._id}>${data[i].title}><br><img src="${data[i].image}" width=320, heigh=240><br /><a href="https://www.nytimes.com${data[i].link}"></a></p>`);
-    $("#articles").append(`<button class="btn btn-primary saveArticle" data-id=${data[i]._id}>Save</button>`)
+    $(".articles").append(`<<p data-id=${data[i]._id}>${data[i].title}><br><img src="${data[i].image}" width=320, heigh=240><br /><a href="https://www.nytimes.com${data[i].link}"></a></p>`);
     $(".saveArticle").on("click", function(){
       saveArticle(dataID)
       // event.stopPropagation();
@@ -21,8 +20,10 @@ $(document).on("click", "p", function (e) {
   console.log(e)
  let X = e.clientX
  let Y = e.clientY
+//  let 
   console.log($(this).attr("data-id"))
   var thisId = $(this).attr("data-id");
+
 
   $.ajax({
     method: "GET",
@@ -31,13 +32,12 @@ $(document).on("click", "p", function (e) {
     .then(function (data) {
       console.log(data);
       $(".modal").css("display", "inline")
-      $(".modal").css("top", Y)
-      $(".modal").css("left", X)
-      $("#notes").append(`<h2>${data.title}</h2>`);
-      $("#notes").append("<input id='titleinput' name='title' >");
-      $("#notes").append("<br><br>")
-      $("#notes").append("<textarea id='bodyinput' name='body'></textarea><br>");
-      $("#notes").append(`<button class="btn btn-primary" data-id="${data._id}" id='savenote'>Save Note</button>`);
+      $(".modal").css("top", Y).css("left", X)
+      $("#notesTitle").html(`<h2>${data.title}</h2>`);
+      $("#notesBody").html("<input id='titleinput' name='title' >");
+      $("#notesBody").append("<br><br>")
+      $("#notesBody").append("<textarea id='bodyinput' name='body'></textarea><br>");
+      $("#notesBody").append(`<button class="btn btn-primary" data-id="${data._id}" id='savenote'>Save Note</button>`);
       $(".saveArticle").on("click", function(){
         saveArticle(dataID)
         event.stopPropagation();

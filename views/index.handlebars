@@ -17,7 +17,7 @@
           <a class="nav-link" href="/saved">Saved Articles</a>
         </li>
         <li class="nav-item">
-          <a class="btn btn-danger scrape-new">SCRAPE NEW ARTICLES!</a>  
+          <a class="btn btn-danger scrape-new">SCRAPE NEW ARTICLES!</a>
         </li>
         <br>
         <li class="nav-item">
@@ -39,13 +39,16 @@
   </div>
   <div class="container">
     <div class="row">
-      <div class="col-8 offset-2">
+      <div class="articles col-12">
+        {{!-- <div id="article"></div> --}}
       </div>
     </div>
   </div>
-  <div id="articles"></div>
 
-  <div class="modal" id="modal01" style="display:none;background-color:black;color:white;height:100;width:100">
-        <div id="notes" style="color:white"></div>
+  <div class="modal card" id="modal01">
+    <div class="card-body">
+      <div class="card-title" id="notesTitle"></div>
+      <div class="card-text" id="notesBody"></div>
+    </div>
   </div>
 </body>
