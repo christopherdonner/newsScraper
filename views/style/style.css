@@ -1,13 +1,15 @@
-.modal card {
+/* .modal card {
     display:none;
     position: relative;
     background-color: #aaa;
     color: black;
     height:100px;
     width:100px
-};
+}; */
 
-.article {
-    margin: 10px;
+
+.article .card{
+    margin: 1px;
     padding: 10px;
+    position: relative
 }

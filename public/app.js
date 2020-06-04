@@ -1,60 +1,69 @@
-var dataID=0
+var dataID = 0
 
-function drawArticles(){
+function saveArticle(dataID) {
+  console.log("saveArticle")
+  console.log(dataID)
+  $.ajax({
+    method: "PUT",
+    url: "/articles/" + dataID
+  }).then(function () {
+    console.log(`saved ${dataID}`)
+    return
+  })
+}
+
+function drawArticles() {
 
 };
 
-function drawModal(){
-  
+function drawModal() {
+
 }
 
 $.getJSON("/articles", function (data) {
   console.log(data)
   for (var i = 0; i < data.length; i++) {
-    dataID=data[i]._id
-    $(".articles").append(`<<p data-id=${data[i]._id}>${data[i].title}><br><img src="${data[i].image}" width=320, heigh=240><br /><a href="https://www.nytimes.com${data[i].link}"></a></p>`);
-    $(".saveArticle").on("click", function(){
-      saveArticle(dataID)
-      // event.stopPropagation();
-      event.preventDefault();
-    })
-  }
+    dataID = data[i]._id
+    $(".articles").append(    
+      `<div class="card w-25" data-id=${data[i]._id}>
+  <img class="card-img-top" src="${data[i].image}" alt="Card image cap" title="${data[i].title}">
+  <div class="card-body">
+    <h5 class="card-title">${data[i].title}</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+</div>`)}
+
 });
 
 
 
-$(document).on("click", "p", function (e) {
+$(document).on("click", ".card", function (e) {
   $("#notes").empty();
   console.log(e)
- let X = e.clientX
- let Y = e.clientY
-//  let 
+  let X = e.clientX
+  let Y = e.clientY
+  //  let 
   console.log($(this).attr("data-id"))
   var thisId = $(this).attr("data-id");
-
 
   $.ajax({
     method: "GET",
     url: "/articles/" + thisId
   })
-    .then(function (data) {
+    .then(data => {
       console.log(data);
       $(".modal").css("display", "inline")
       $(".modal").css("top", Y).css("left", X)
       // $(".modal").html(`<div class='col-1 offset-11' id='close'>X</div>`)
-      $("#notesTitle").html(`<row><div class='col-1 offset-11' id='close'>X</div></row><row><h3>${data.title}</h3></row>`);
+      $("#notesTitle").html(`<row><div class='col-1 offset-11' id='close'><button type="button" class="close">X</button></div></row><row><h3>${data.title}</h3></row>`);
+      $(".close").on("click", () => { $('.modal').css("display", "none") })
       $("#notesBody").html("<input id='titleinput' name='title' >");
       $("#notesBody").append("<br><br>")
       $("#notesBody").append("<textarea id='bodyinput' name='body'></textarea><br>");
-      $("#notesBody").append(`<button class="btn btn-primary" data-id="${data._id}" id='savenote'>Save Note</button>`);
-      $("#notesBody").append(`<a href="https://www.nytimes.com${data.link}"><button class="btn btn-primary" data-id="${data._id}" id='savenote'>Open</button>`);
-      
-      $(".saveArticle").on("click", function(e){
-        saveArticle(dataID)
-        
-        event.stopPropagation(e);
-        event.preventDefault(e);
-      })
+      $("#notesBody").append(`<button class="btn btn-primary" data-id="${data._id}" id='savenote'>Save Note</button> `);
+      $("#notesBody").append(`<a href="https://www.nytimes.com${data.link}"><button class="btn btn-primary" data-id="${data._id}" id='savenote'>Open</button> `);
+      $("#notesBody").append(`<button class="btn btn-primary saveArticle" data-id="${data._id}">Save Article</button> `);
+      $(".saveArticle").on("click", () => {saveArticle(data._id)})
 
       if (data.note) {
         $("#titleinput").val(data.note.title);
@@ -90,10 +99,10 @@ $(".scrape-new").on("click", function () {
     method: "GET",
     url: "/scrape"
   })
-  .then(function (){
-    console.log("scrape complete")
-    location.reload();
-  })
+    .then(function () {
+      console.log("scrape complete")
+      location.reload();
+    })
 })
 
 $(".clear").on("click", function () {
@@ -102,10 +111,10 @@ $(".clear").on("click", function () {
     method: "POST",
     url: "/articles",
   })
-  .then(function (){
-    console.log("articles cleared")
-    location.reload();
-  })
+    .then(function () {
+      console.log("articles cleared")
+      location.reload();
+    })
 })
 
 // $(".saveArticle").on("click", function(){
@@ -115,14 +124,3 @@ $(".clear").on("click", function () {
 //   // event.preventDefault();
 // })
 
-function saveArticle(dataID){
-  console.log("saveArticle")
-  console.log(dataID)
-  $.ajax({
-    method: "PUT",
-    url: "/articles/" + dataID
-  }).then(function(){
-    console.log(`saved ${dataID}`)
-    return 
-  })
-}

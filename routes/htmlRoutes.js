@@ -17,11 +17,8 @@ module.exports = function (app) {
         var result = {};
         result.title = $(element).text();
         result.link = $(this).children("a").attr("href");
-        // console.log(result.link)
-
         result.image = $(this).parent().siblings('figure').children('a').children('img').attr('src')
-        // console.log("IMAGE!")
-        console.log($(this).parent().siblings('figure').children('a').children('img').attr('src'))
+        result.blurb=$(this).parent().siblings('figure').children('a')
 
         db.Article.create(result)
           .then(function (dbArticle) {
@@ -73,15 +70,25 @@ module.exports = function (app) {
 
   app.post("/articles/", function (req, res) {
     console.log("clear")
-    db.Article.deleteMany({}).then(function (results) {
-      console.log(results)
+    db.Article.deleteMany({}).then(function (dbArticle) {
+      res.json(dbArticle);
+    })
+    .catch(function (err) {
+      res.json(err);
     });
   })
 
   app.put("/articles/:id", function (req, res) {
+    console.log('saving this shit, bro')
     console.log(req.params)
     db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: true })
-  })
+    .then(function (dbArticle) {
+      res.json(dbArticle);
+    })
+    .catch(function (err) {
+      res.json(err);
+    });
+  })      
 
   app.get("/saved/", function (req, res) {
     console.log("/saved/");
