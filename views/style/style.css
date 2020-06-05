@@ -11,5 +11,6 @@
 .article .card{
     margin: 1px;
     padding: 10px;
-    position: relative
+    position: relative;
+    display: inline
 }
