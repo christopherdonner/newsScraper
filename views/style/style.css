@@ -1,15 +1,22 @@
-/* .modal card {
+body {
+    background-color: black;
+}
+
+.modal card {
     display:none;
     position: relative;
     background-color: #aaa;
     color: black;
     height:100px;
     width:100px
-}; */
+};
 
 
-.article .card{
-    margin: 1px;
-    padding: 10px;
-    position: relative
+
+img {
+    padding: 2px;
+    margin: 2px 2px 2px 2px;
+    border: 2px 2px 2px 2px;
+    border-radius: 10px;
+    border-color: white;
 }

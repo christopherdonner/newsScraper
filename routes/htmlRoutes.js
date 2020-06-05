@@ -18,7 +18,7 @@ module.exports = function (app) {
         result.title = $(element).text();
         result.link = $(this).children("a").attr("href");
         result.image = $(this).parent().siblings('figure').children('a').children('img').attr('src')
-        result.blurb=$(this).parent().siblings('figure').children('a')
+        result.blurb=$(element).siblings("p").text()
 
         db.Article.create(result)
           .then(function (dbArticle) {
